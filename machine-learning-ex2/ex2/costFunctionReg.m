@@ -18,9 +18,17 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+hyp = sigmoid(X * theta);
 
+regPortion = (lambda / (2 * m)) * sum(theta(2:end).^2);
 
+J = (1 / m) * sum(-y .* log(hyp) - (1 - y) .* log(1 - hyp)) + regPortion;
 
+grad(1) = (1 / m) * ((X(:, 1))' * (hyp - y));
+
+for i = 2:size(theta)
+    grad(i) = (1 / m) * ((X(:, i))' * (hyp - y)) + (lambda / m) * theta(i);
+end
 
 % =============================================================
 
