@@ -19,6 +19,8 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% COST
+
 pred = X * theta;
 
 sqrErrors = (pred - y) .^ 2;
@@ -27,21 +29,14 @@ regTerm = lambda / (2 * m) * sum(theta(2:end) .^ 2)
 
 J = 1 / (2 * m) * sum(sqrErrors) + regTerm;
 
-disp(size(X));
-disp(size(theta));
-disp(size(pred));
-disp(size(sqrErrors));
-disp(size(regTerm));
-disp(size(J));
-disp(size(X(1)));
-disp(size(X(2:end)));
-disp(size(theta(2:end)));
+% GRAD
 
-grad_1 = (1 / m) * sum(pred - y) .* X(1);
+grad_1 = (1 / m) * sum((pred - y) .* X(:, 1));
 
-grad_2end = (1 / m) * sum(pred - y) * X(2:end) + (lambda / m) * theta(2:end);
+% SUM FOR THREE VARIABLES = NUM NUM NUM (YOU NEED TO TRANSPOSE)
+grad_2end = (1 / m) * sum((pred - y) .* X(:, 2:end))' + (lambda / m) * theta(2:end);
 
-grad = [grad_1 grad_2end];
+grad = [grad_1; grad_2end(:)];
 
 
 % =========================================================================
